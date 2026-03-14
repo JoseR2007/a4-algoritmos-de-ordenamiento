@@ -35,7 +35,7 @@ int menu(const char *, char *[], int, int, int);
 void show_menu(const char *, char *[], int, int, int, int);
 
 // Algoritmos de ordenamiento:
-void quick_sort(char *[] int, int);
+void quick_sort(char *[], int, int);
 int partition(char *[], int, int);
 
 // Funciones de color:
@@ -142,6 +142,14 @@ void show_menu(const char *titulo, char *opciones[], int cant_opciones, int ind,
    color_default();
 }
 
+/*
+Funcion: quick_sort
+Argumentos: char *arr[]: Indica el arreglo de strins a organizar
+            int low: Indica el indice al menor elemento
+            int high: Indica el indice al mayor elemento
+Objetivo: Se encarga de organizar un arreglo de strings utilizando el algoritmo quick_sort
+Retorno: (void)
+*/
 void quick_sort(char *arr[], int low, int high)
 {
    if (low < high)
@@ -153,6 +161,14 @@ void quick_sort(char *arr[], int low, int high)
    }
 }
 
+/*
+Funcion: partition
+Argumentos: char *arr[]: Indica el arreglo de strings a organizar
+            int low: Indica el indice del menor elemento
+            int high: Indica el indice del mayor elemento
+Objetivo: Se encarga de organizar los elementos y mover el pivot a una nueva ubicacion
+Retorno: (int) Indice del nuevo pivot
+*/
 int partition (char *arr[], int low, int high)
 {
    char *pivot = arr[high];
@@ -160,7 +176,7 @@ int partition (char *arr[], int low, int high)
 
    for (int ind = low; ind < high; ind++)
    {
-      if (strnicmp(arr[ind], pivot) > 0)
+      if (strcmp(arr[ind], pivot) > 0)
       {
          i++;
          char* temp = arr[i];
