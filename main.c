@@ -1,7 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <conio.h>
+#include <conio.c>
 #include <string.h>
+
+// Constantes:
+#define CANT_OPCIONES_MENU_MAIN 3
+#define CANT_OPCIONES_MENU_ORDE 5
 
 // Teclas de control:
 #define ESC 27
@@ -22,8 +26,8 @@
 #define WHITE 15
 #define LIGHTGRAY 7
 
-int menu(char *, char *, int, int, int);
-void show_menu(char *, char *, int, int, int, int);
+int menu(const char *, char *[], int, int, int);
+void show_menu(const char *, char *[], int, int, int, int);
 
 // Funciones de color:
 void set_color(int, int);
@@ -31,6 +35,26 @@ void color_default(void);
 
 int main()
 {
+   char *opciones_menu_principal[CANT_OPCIONES_MENU_MAIN] = {"Ordenamiento", "Busqueda", "Salir"};
+   char *opciones_menu_ordenamiento[CANT_OPCIONES_MENU_ORDE] = {"Burbuja", "Shell", "Seleccion", "QuickSort", "Atras"};
+
+   int opcion;
+   do {
+      _setcursortype(0);
+      opcion = menu("Menu", opciones_menu_principal, CANT_OPCIONES_MENU_MAIN, 1, 1);
+
+      if (opcion == 0)
+      {
+         opcion = menu("Ordenamiento", opciones_menu_ordenamiento, CANT_OPCIONES_MENU_ORDE, strlen("Ordenamiento") + 3, 2);
+
+         if (opcion == CANT_OPCIONES_MENU_ORDE - 1)
+         {
+            system("cls");
+            continue;
+         }
+      }
+
+   } while (opcion != CANT_OPCIONES_MENU_MAIN - 1);
 
    return 0;
 }
@@ -45,13 +69,14 @@ Argumentos: char *titulo: Indica el titulo que aparecera en la parte superior de
 Objetivo: Se encarga de la funcionalidad de movimiento en el menu
 Retorno: (int) La posicion del usuario en el menu.
 */
-int menu(char *titulo, char *opciones, int cant_opciones, int posx, int posy)
+int menu(const char *titulo, char *opciones[], int cant_opciones, int posx, int posy)
 {
    int ind = 0;
    int tecla;
 
    do
    {
+      show_menu(titulo, opciones, cant_opciones, ind, posx, posy);
       do
       {
          tecla = getch();
@@ -86,7 +111,7 @@ Argumentos: char *titulo: Indica el titulo del menu.
 Objetivo: Mostrar un menu interactivo en consola.
 Retorno: (void)
 */
-void show_menu(char *titulo, char *opciones, int cant_opciones, int ind, int posx, int posy)
+void show_menu(const char *titulo, char *opciones[], int cant_opciones, int ind, int posx, int posy)
 {
    int w_max = strlen(titulo) + 2;
    for (int j = 0; j < cant_opciones; j++)
@@ -95,15 +120,17 @@ void show_menu(char *titulo, char *opciones, int cant_opciones, int ind, int pos
 
    gotoxy(posx, posy);
    set_color(WHITE, BLUE);
-   printf("%s", titulo);
+   printf("%*s", w_max * -1, titulo);
    for (int i = 0; i < cant_opciones; i++)
    {
       if (i == ind)
          set_color(YELLOW, BLACK);
       else
          set_color(YELLOW, BLUE);
-      printf("%*s", w_max, opciones[i]);
+      gotoxy(posx, posy + i + 1);
+      printf("%*s", w_max * -1, opciones[i]);
    }
+   color_default();
 }
 
 /*
@@ -112,7 +139,7 @@ Argumentos: (void)
 Objetivo: Reestablecer los colores de consola a sus valores por defecto
 Retorno: (void)
 */
-void color_defualt(void)
+void color_default(void)
 {
    textcolor(LIGHTGRAY);
    textbackground(BLACK);
