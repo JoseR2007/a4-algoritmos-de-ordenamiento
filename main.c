@@ -8,7 +8,7 @@
 #define CANT_OPCIONES_MENU_ORDE 5
 #define PADDING_MENU 2
 #define POS_INI_Y 1
-#define POS_INI_x 1
+#define POS_INI_X 1
 #define ORDENAMIENTO_OPCION 0
 #define BUSQUEDA_OPCION 1
 
