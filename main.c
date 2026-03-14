@@ -34,6 +34,10 @@
 int menu(const char *, char *[], int, int, int);
 void show_menu(const char *, char *[], int, int, int, int);
 
+// Algoritmos de ordenamiento:
+void quick_sort(char *[] int, int);
+int partition(char *[], int, int);
+
 // Funciones de color:
 void set_color(int, int);
 void color_default(void);
@@ -136,6 +140,38 @@ void show_menu(const char *titulo, char *opciones[], int cant_opciones, int ind,
       printf("%*s", w_max * -1, opciones[i]);
    }
    color_default();
+}
+
+void quick_sort(char *arr[], int low, int high)
+{
+   if (low < high)
+   {
+      int pivot = partition(arr, low, high);
+
+      quick_sort(arr, low, pivot - 1);
+      quick_sort(arr, pivot + 1, high);
+   }
+}
+
+int partition (char *arr[], int low, int high)
+{
+   char *pivot = arr[high];
+   int i = low - 1;
+
+   for (int ind = low; ind < high; ind++)
+   {
+      if (strnicmp(arr[ind], pivot) > 0)
+      {
+         i++;
+         char* temp = arr[i];
+         arr[i] = arr[ind];
+         arr[ind] = temp;
+      }
+   }
+   char* temp = arr[i + 1];
+   arr[i + 1] = arr[high];
+   arr[high] = temp;
+   return i + 1;
 }
 
 /*
