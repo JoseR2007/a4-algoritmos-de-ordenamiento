@@ -11,6 +11,7 @@
 #define POS_INI_X 1
 #define ORDENAMIENTO_OPCION 0
 #define BUSQUEDA_OPCION 1
+#define PATH_SAVE "palabras.bin"
 
 // Teclas de control:
 #define ESC 27
@@ -33,6 +34,8 @@
 
 int menu(const char *, char *[], int, int, int);
 void show_menu(const char *, char *[], int, int, int, int);
+void cargar_cadenas (char **[], int *);
+void imprimir_palabras(char *[], int);
 
 // Algoritmos de ordenamiento:
 void quick_sort(char *[], int, int);
@@ -142,6 +145,12 @@ void show_menu(const char *titulo, char *opciones[], int cant_opciones, int ind,
    color_default();
 }
 
+void imprimir_palabras(char *arr[], int size)
+{
+   for (int ind = 0; ind < size; ind++)
+      printf("%s ", arr[ind]);
+}
+
 /*
 Funcion: quick_sort
 Argumentos: char *arr[]: Indica el arreglo de strins a organizar
@@ -176,7 +185,7 @@ int partition (char *arr[], int low, int high)
 
    for (int ind = low; ind < high; ind++)
    {
-      if (strcmp(arr[ind], pivot) > 0)
+      if (strcmp(arr[ind], pivot) < 0)
       {
          i++;
          char* temp = arr[i];
