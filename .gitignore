@@ -1,3 +1,6 @@
+# Archivos de configuracion de Visual Studio Code:
 /.vscode/*
-main.exe
-main.o
+
+# Archivos generados al compilar en Code::Blocks:
+*.exe
+*.o

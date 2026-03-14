@@ -6,6 +6,11 @@
 // Constantes:
 #define CANT_OPCIONES_MENU_MAIN 3
 #define CANT_OPCIONES_MENU_ORDE 5
+#define PADDING_MENU 2
+#define POS_INI_Y 1
+#define POS_INI_x 1
+#define ORDENAMIENTO_OPCION 0
+#define BUSQUEDA_OPCION 1
 
 // Teclas de control:
 #define ESC 27
@@ -41,11 +46,11 @@ int main()
    int opcion;
    do {
       _setcursortype(0);
-      opcion = menu("Menu", opciones_menu_principal, CANT_OPCIONES_MENU_MAIN, 1, 1);
+      opcion = menu("Menu", opciones_menu_principal, CANT_OPCIONES_MENU_MAIN, POS_INI_X, POS_INI_Y);
 
       if (opcion == 0)
       {
-         opcion = menu("Ordenamiento", opciones_menu_ordenamiento, CANT_OPCIONES_MENU_ORDE, strlen("Ordenamiento") + 3, 2);
+         opcion = menu("Ordenamiento", opciones_menu_ordenamiento, CANT_OPCIONES_MENU_ORDE, strlen("Ordenamiento") + PADDING_MENU + 1, ORDENAMIENTO_OPCION + 1);
 
          if (opcion == CANT_OPCIONES_MENU_ORDE - 1)
          {
@@ -113,10 +118,10 @@ Retorno: (void)
 */
 void show_menu(const char *titulo, char *opciones[], int cant_opciones, int ind, int posx, int posy)
 {
-   int w_max = strlen(titulo) + 2;
+   int w_max = strlen(titulo) + PADDING_MENU;
    for (int j = 0; j < cant_opciones; j++)
       if (strlen(opciones[j]) > w_max)
-         w_max = strlen(opciones[j]) + 2;
+         w_max = strlen(opciones[j]) + PADDING_MENU;
 
    gotoxy(posx, posy);
    set_color(WHITE, BLUE);
