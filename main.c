@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <conio.c>
 #include <string.h>
+#include <ctype.h>
 
 // Constantes:
 #define CANT_OPCIONES_MENU_MAIN 3
@@ -11,6 +12,7 @@
 #define POS_INI_X 1
 #define ORDENAMIENTO_OPCION 0
 #define BUSQUEDA_OPCION 1
+#define PATH_SAVE "palabras.bin"
 
 // Teclas de control:
 #define ESC 27
@@ -33,6 +35,12 @@
 
 int menu(const char *, char *[], int, int, int);
 void show_menu(const char *, char *[], int, int, int, int);
+void cargar_cadenas (char **[], int *);
+int comparar_str(char *, char *);
+
+// Algoritmos de ordenamiento:
+void quick_sort(char *[], int, int);
+int partition(char *[], int, int);
 
 // Funciones de color:
 void set_color(int, int);
@@ -136,6 +144,81 @@ void show_menu(const char *titulo, char *opciones[], int cant_opciones, int ind,
       printf("%*s", w_max * -1, opciones[i]);
    }
    color_default();
+}
+
+/*
+Funcion: comparar_str
+Argumentos: char *str: Indica uno de los string a evaluar
+            char *str1: Indica uno de los string a evaluar
+Objetivo: Devolver el orden en el que van los string tomando en cuenta su case
+Retorno: (int)
+*/
+int comparar_str(char *str, char *str1)
+{
+   int len = strlen(str);
+   int len1 = strlen(str1);
+
+   char *str_lower  = malloc((len  + 1) * sizeof(char));
+   char *str1_lower = malloc((len1 + 1) * sizeof(char));
+
+   for (int i = 0; i <= len; i++)
+      str_lower[i] = tolower((unsigned char) str[i]);
+
+   for (int i = 0; i <= len1; i++)
+      str1_lower[i] = tolower((unsigned char) str1[i]);
+
+   int result = strcmp(str_lower, str1_lower);
+   free(str_lower);
+   free(str1_lower);
+   return result;
+}
+
+/*
+Funcion: quick_sort
+Argumentos: char *arr[]: Indica el arreglo de strins a organizar
+            int low: Indica el indice al menor elemento
+            int high: Indica el indice al mayor elemento
+Objetivo: Se encarga de organizar un arreglo de strings utilizando el algoritmo quick_sort
+Retorno: (void)
+*/
+void quick_sort(char *arr[], int low, int high)
+{
+   if (low < high)
+   {
+      int pivot = partition(arr, low, high);
+
+      quick_sort(arr, low, pivot - 1);
+      quick_sort(arr, pivot + 1, high);
+   }
+}
+
+/*
+Funcion: partition
+Argumentos: char *arr[]: Indica el arreglo de strings a organizar
+            int low: Indica el indice del menor elemento
+            int high: Indica el indice del mayor elemento
+Objetivo: Se encarga de organizar los elementos y mover el pivot a una nueva ubicacion
+Retorno: (int) Indice del nuevo pivot
+*/
+int partition (char *arr[], int low, int high)
+{
+   char *pivot = arr[high];
+   int i = low - 1;
+
+   for (int ind = low; ind < high; ind++)
+   {
+      if (comparar_str(arr[ind], pivot) < 0)
+      {
+         i++;
+         char* temp = arr[i];
+         arr[i] = arr[ind];
+         arr[ind] = temp;
+      }
+   }
+   char* temp = arr[i + 1];
+   arr[i + 1] = arr[high];
+   arr[high] = temp;
+   return i + 1;
 }
 
 /*
