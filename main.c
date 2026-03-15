@@ -40,6 +40,7 @@ int comparar_str(char *, char *);
 
 // Algoritmos de ordenamiento:
 void quick_sort(char *[], int, int);
+void shell_sort(char *[], int);
 int partition(char *[], int, int);
 
 // Funciones de color:
@@ -171,6 +172,29 @@ int comparar_str(char *str, char *str1)
    free(str_lower);
    free(str1_lower);
    return result;
+}
+/*
+Funcion: shell_sort
+Argumentos: char *arr[]: Indica el arreglo de cadenas a ordenar
+            int size: Indica el tamaño del arreglo a ordenar
+Objetivo: Organizar el arreglo de cadenas de caracteres usando el metodo de ordenamiento Shell
+Retorno: (void)
+*/
+void shell_sort(char *arr[], int size)
+{
+   for (int gap = size / 2; gap > 0; gap /= 2)
+   {
+      for (int i = gap; i < size; i++)
+      {
+         char *temp = arr[i];
+         int j;
+         for (j = i; j >= gap && comparar_str(arr[j - gap], temp) > 0; j -= gap)
+         {
+            arr[j] = arr[j - gap];
+         }
+         arr[j] = temp;
+      }
+   }
 }
 
 /*
