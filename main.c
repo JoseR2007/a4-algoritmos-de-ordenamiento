@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <conio.c>
 #include <string.h>
+#include <ctype.h>
 
 // Constantes:
 #define CANT_OPCIONES_MENU_MAIN 3
@@ -35,7 +36,7 @@
 int menu(const char *, char *[], int, int, int);
 void show_menu(const char *, char *[], int, int, int, int);
 void cargar_cadenas (char **[], int *);
-void imprimir_palabras(char *[], int);
+int comparar_str(char *, char *);
 
 // Algoritmos de ordenamiento:
 void quick_sort(char *[], int, int);
@@ -145,10 +146,31 @@ void show_menu(const char *titulo, char *opciones[], int cant_opciones, int ind,
    color_default();
 }
 
-void imprimir_palabras(char *arr[], int size)
+/*
+Funcion: comparar_str
+Argumentos: char *str: Indica uno de los string a evaluar
+            char *str1: Indica uno de los string a evaluar
+Objetivo: Devolver el orden en el que van los string tomando en cuenta su case
+Retorno: (int)
+*/
+int comparar_str(char *str, char *str1)
 {
-   for (int ind = 0; ind < size; ind++)
-      printf("%s ", arr[ind]);
+   int len = strlen(str);
+   int len1 = strlen(str1);
+
+   char *str_lower  = malloc((len  + 1) * sizeof(char));
+   char *str1_lower = malloc((len1 + 1) * sizeof(char));
+
+   for (int i = 0; i <= len; i++)
+      str_lower[i] = tolower((unsigned char) str[i]);
+
+   for (int i = 0; i <= len1; i++)
+      str1_lower[i] = tolower((unsigned char) str1[i]);
+
+   int result = strcmp(str_lower, str1_lower);
+   free(str_lower);
+   free(str1_lower);
+   return result;
 }
 
 /*
@@ -185,7 +207,7 @@ int partition (char *arr[], int low, int high)
 
    for (int ind = low; ind < high; ind++)
    {
-      if (strcmp(arr[ind], pivot) < 0)
+      if (comparar_str(arr[ind], pivot) < 0)
       {
          i++;
          char* temp = arr[i];
