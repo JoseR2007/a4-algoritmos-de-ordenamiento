@@ -36,3 +36,20 @@ Recibe 5 parametros detallado a continuación:
 - `int posx` y `int posy`:
   Estos parametros van de la mano. Componen la posición del menú en la consola indicado dentro del eje X (horizontal) y eje Y (vertical).
   Estos paramtros son utilizados con gotoxy(), envielos tomando en cuenta esto.
+
+## Uso de comparar_str()
+En vista de `strcmp()` de `string.h` no toma en cuenta el CASE, me veo obligado a implementar esta funcion.
+La misma se basa en `strcmp()` para devolver el orden en el cual van las cadenas recibidas.
+
+**Prototipo:**
+`int comparar_str(char *str, char *str1)`
+
+La funcion devuelve un valor numerico que indica el orden en el que van las cadenas de texto.
+Suponga usted la siguiente llamada: `comparar_str(a, b)` siendo `a` y `b` cadenas de texto. 
+
+`comparar_str()` devuelve:
+- Un valor negativo (< 0), si `a` va antes que `b`.
+- 0 si `a` es quivalente a `b`, dicho de otra forma, *el orden en este caso no importa*
+- Un valor positivo (> 0), si `a` va depues que `b`.
+
+**A la hora de desarrollar su algoritmo, usted debe preferir usar `comparar_str()` antes que `strcmp()`, pues esta sí toma en cuenta el CASE a diferencia de `strcmp()`**.
