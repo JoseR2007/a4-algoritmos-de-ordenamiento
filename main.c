@@ -7,6 +7,7 @@
 // Constantes:
 #define CANT_OPCIONES_MENU_MAIN 3
 #define CANT_OPCIONES_MENU_ORDE 5
+#define CANT_OPCIONES_MENU_BUSQUEDA 3
 #define PADDING_MENU 2
 #define POS_INI_Y 1
 #define POS_INI_X 1
@@ -43,6 +44,9 @@ void quick_sort(char *[], int, int);
 void shell_sort(char *[], int);
 int partition(char *[], int, int);
 
+// Algortimo de busqueda:
+int binary_search(char *[], int, char *);
+
 // Funciones de color:
 void set_color(int, int);
 void color_default(void);
@@ -51,6 +55,7 @@ int main()
 {
    char *opciones_menu_principal[CANT_OPCIONES_MENU_MAIN] = {"Ordenamiento", "Busqueda", "Salir"};
    char *opciones_menu_ordenamiento[CANT_OPCIONES_MENU_ORDE] = {"Burbuja", "Shell", "Seleccion", "QuickSort", "Atras"};
+   char *opciones_menu_busqueda[CANT_OPCIONES_MENU_BUSQUEDA] = {"Secuencial", "Binaria", "Atras"};
 
    int opcion;
    do {
@@ -64,6 +69,17 @@ int main()
          if (opcion == CANT_OPCIONES_MENU_ORDE - 1)
          {
             system("cls");
+            opcion = -1;
+            continue;
+         }
+      } else if (opcion == 1)
+      {
+         opcion = menu("Busqueda", opciones_menu_busqueda, CANT_OPCIONES_MENU_BUSQUEDA, strlen("Ordenamiento") + PADDING_MENU + 1, BUSQUEDA_OPCION + 1);
+
+         if (opcion == CANT_OPCIONES_MENU_BUSQUEDA - 1)
+         {
+            system("cls");
+            opcion = -1;
             continue;
          }
       }
@@ -152,7 +168,9 @@ Funcion: comparar_str
 Argumentos: char *str: Indica uno de los string a evaluar
             char *str1: Indica uno de los string a evaluar
 Objetivo: Devolver el orden en el que van los string tomando en cuenta su case
-Retorno: (int)
+Retorno: < 0: Si str va antes que str1
+         > 0: Si str va despues que str1
+         0: Si str es quivalente a str1
 */
 int comparar_str(char *str, char *str1)
 {
@@ -243,6 +261,33 @@ int partition (char *arr[], int low, int high)
    arr[i + 1] = arr[high];
    arr[high] = temp;
    return i + 1;
+}
+
+/*
+Funcion: binary_search
+Argumentos: char *arr[]: Indica el arreglo de cadenas que se verificara
+            int n: Indica la cantidad de elementos en arr.
+            char *target: Indica el elemento a buscar
+Objetivo: Buscar target dentro del arreglo utilizando binary search
+Retorno: (int) Retorna el indice del elemento con coincidencia. Devolvera -1 si no se encontro coincidencia.
+*/
+int binary_search(char *arr[], int n, char *target)
+{
+   int lo = 0;
+   int hi = n - 1;
+
+   while (lo <= hi) {
+      int mid = lo + (hi - lo) / 2;
+
+      if (!comparar_str(arr[mid], target))
+         return mid;
+      else if (comparar_str(arr[mid], target) > 0)
+         lo = mid + 1;
+      else
+         hi = mid - 1;
+   }
+
+   return -1;
 }
 
 /*
