@@ -43,6 +43,9 @@ void quick_sort(char *[], int, int);
 void shell_sort(char *[], int);
 int partition(char *[], int, int);
 
+// Algortimo de busqueda:
+int binary_search(char *[], int, char *);
+
 // Funciones de color:
 void set_color(int, int);
 void color_default(void);
@@ -243,6 +246,32 @@ int partition (char *arr[], int low, int high)
    arr[i + 1] = arr[high];
    arr[high] = temp;
    return i + 1;
+}
+
+/*
+Funcion: binary_search
+Argumentos: char *arr[]: Indica el arreglo de cadenas que se verificara
+            int n: Indica la cantidad de elementos en arr.
+            char *target: Indica el elemento a buscar
+Objetivo: Buscar target dentro del arreglo utilizando binary search
+*/
+int binary_search(char *arr[], int n, char *target)
+{
+   int lo = 0;
+   int hi = n - 1;
+
+   while (lo <= hi) {
+      int mid = lo + (hi - lo) / 2;
+
+      if (!comparar_str(arr[mid], target))
+         return mid;
+      else if (comparar_str(arr[mid], target) > 0)
+         lo = mid + 1;
+      else
+         hi = mid - 1;
+   }
+
+   return -1;
 }
 
 /*
