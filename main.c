@@ -7,6 +7,7 @@
 // Constantes:
 #define CANT_OPCIONES_MENU_MAIN 3
 #define CANT_OPCIONES_MENU_ORDE 5
+#define CANT_OPCIONES_MENU_BUSQUEDA 3
 #define PADDING_MENU 2
 #define POS_INI_Y 1
 #define POS_INI_X 1
@@ -54,6 +55,7 @@ int main()
 {
    char *opciones_menu_principal[CANT_OPCIONES_MENU_MAIN] = {"Ordenamiento", "Busqueda", "Salir"};
    char *opciones_menu_ordenamiento[CANT_OPCIONES_MENU_ORDE] = {"Burbuja", "Shell", "Seleccion", "QuickSort", "Atras"};
+   char *opciones_menu_busqueda[CANT_OPCIONES_MENU_BUSQUEDA] = {"Secuencial", "Binaria", "Atras"};
 
    int opcion;
    do {
@@ -67,6 +69,17 @@ int main()
          if (opcion == CANT_OPCIONES_MENU_ORDE - 1)
          {
             system("cls");
+            opcion = -1;
+            continue;
+         }
+      } else if (opcion == 1)
+      {
+         opcion = menu("Busqueda", opciones_menu_busqueda, CANT_OPCIONES_MENU_BUSQUEDA, strlen("Ordenamiento") + PADDING_MENU + 1, BUSQUEDA_OPCION + 1);
+
+         if (opcion == CANT_OPCIONES_MENU_BUSQUEDA - 1)
+         {
+            system("cls");
+            opcion = -1;
             continue;
          }
       }
