@@ -168,7 +168,9 @@ Funcion: comparar_str
 Argumentos: char *str: Indica uno de los string a evaluar
             char *str1: Indica uno de los string a evaluar
 Objetivo: Devolver el orden en el que van los string tomando en cuenta su case
-Retorno: (int)
+Retorno: < 0: Si str va antes que str1
+         > 0: Si str va despues que str1
+         0: Si str es quivalente a str1
 */
 int comparar_str(char *str, char *str1)
 {
@@ -267,6 +269,7 @@ Argumentos: char *arr[]: Indica el arreglo de cadenas que se verificara
             int n: Indica la cantidad de elementos en arr.
             char *target: Indica el elemento a buscar
 Objetivo: Buscar target dentro del arreglo utilizando binary search
+Retorno: (int) Retorna el indice del elemento con coincidencia. Devolvera -1 si no se encontro coincidencia.
 */
 int binary_search(char *arr[], int n, char *target)
 {
