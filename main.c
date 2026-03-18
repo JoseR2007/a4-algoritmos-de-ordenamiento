@@ -46,6 +46,7 @@ int partition(char *[], int, int);
 
 // Algortimo de busqueda:
 int binary_search(char *[], int, char *);
+int sequential_search(char *[], int, char *);
 
 // Funciones de color:
 void set_color(int, int);
@@ -286,6 +287,23 @@ int binary_search(char *arr[], int n, char *target)
       else
          hi = mid - 1;
    }
+
+   return -1;
+}
+
+/*
+Funcion: sequential_search
+Argumentos: char *arr[]: Indica el arreglo de cadenas de caracteres a verificar
+            int n: Indica la longitud del arreglo
+            char *target: Indica el elemento a buscar
+Objetivo: Buscar un target dentro del arreglo utilizando el algoritmo de busqueda secuencial.
+Retorno: (int) El indice del elemento con coincidencia. Devolvera -1 Si no se encontro coincidencia
+*/
+int sequential_search(char *arr[], int n, char *target)
+{
+   for (int i = 0; i < n; i++)
+      if (!comparar_str(arr[i], target))
+         return i;
 
    return -1;
 }
